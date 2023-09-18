@@ -1,0 +1,4 @@
+.venv
+landmark_images
+src/__pycache__
+mean_and_std.pt
