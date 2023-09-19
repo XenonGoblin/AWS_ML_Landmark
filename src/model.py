@@ -8,16 +8,73 @@ class MyModel(nn.Module):
 
         super().__init__()
 
-        # YOUR CODE HERE
         # Define a CNN architecture. Remember to use the variable num_classes
         # to size appropriately the output of your classifier, and if you use
         # the Dropout layer, use the variable "dropout" to indicate how much
         # to use (like nn.Dropout(p=dropout))
 
+        # Using VGG like architecture
+
+        self.features = nn.Sequential(
+            # conv1
+            nn.Conv2d(3, 64, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
+            nn.Conv2d(64, 64, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
+            # pool1
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            # conv2
+            nn.Conv2d(64, 128, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
+            nn.Conv2d(128, 128, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
+            # pool2
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            # conv3
+            nn.Conv2d(128, 256, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
+            nn.Conv2d(256, 256, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
+            nn.Conv2d(256, 256, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
+            # pool3
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            # conv4
+            nn.Conv2d(256, 512, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
+            nn.Conv2d(512, 512, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
+            nn.Conv2d(512, 512, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
+            # pool4
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            # conv5
+            nn.Conv2d(512, 512, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
+            nn.Conv2d(512, 512, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
+            nn.Conv2d(512, 512, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
+            # pool5
+            nn.MaxPool2d(kernel_size=2, stride=2),
+
+            # Fully connected layers
+            nn.Flatten(),
+            nn.Linear(512 * 7 * 7, 4096),
+            nn.ReLU(),
+            nn.Dropout(p=dropout),
+            nn.Linear(4096, 4096),
+            nn.ReLU(),
+            nn.Dropout(p=dropout),
+            nn.Linear(4096, num_classes)
+        )
+
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        # YOUR CODE HERE: process the input tensor through the
+        # process the input tensor through the
         # feature extractor, the pooling and the final linear
         # layers (if appropriate for the architecture chosen)
+
+        x = self.features(x)
         return x
 
 
