@@ -9,8 +9,14 @@ def get_loss():
     optionally moving it to the GPU if use_cuda is set to True
     """
 
-    # YOUR CODE HERE: select a loss appropriate for classification
-    loss  = # YOUR CODE HERE
+    # select a loss appropriate for classification
+    loss  = nn.CrossEntropyLoss(weight=None, 
+                                size_average=None, 
+                                ignore_index=- 100, 
+                                reduce=None, 
+                                reduction='mean', 
+                                label_smoothing=0.0
+                                )
 
     return loss
 
@@ -35,16 +41,20 @@ def get_optimizer(
         # YOUR CODE HERE: create an instance of the SGD
         # optimizer. Use the input parameters learning_rate, momentum
         # and weight_decay
-        opt = torch.optim.SGD(
-            # YOUR CODE HERE
+        opt = torch.optim.SGD(model.parameters(),
+            lr=learning_rate,
+            momentum=momentum,
+            weight_decay=weight_decay
         )
 
     elif optimizer.lower() == "adam":
         # YOUR CODE HERE: create an instance of the Adam
         # optimizer. Use the input parameters learning_rate, momentum
         # and weight_decay
-        opt = torch.optim.Adam(
-            # YOUR CODE HERE
+        opt = torch.optim.Adam(model.parameters(),
+            lr=learning_rate,
+            #momentum=momentum, not applicable to adam
+            weight_decay=weight_decay
         )
     else:
         raise ValueError(f"Optimizer {optimizer} not supported")

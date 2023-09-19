@@ -2,3 +2,5 @@
 landmark_images
 src/__pycache__
 mean_and_std.pt
+src/.ipynb_checkpoints
+.ipynb_checkpoints
