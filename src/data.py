@@ -46,12 +46,15 @@ def get_data_loaders(
     # appropriate transforms for that step
     data_transforms = {
         "train": transforms.Compose([
-            transforms.Resize(256),
-            transforms.CenterCrop(224),
-            transforms.RandomHorizontalFlip(),
             transforms.RandomRotation(10),
+            transforms.Resize(256),
+            transforms.RandomPerspective(distortion_scale=0.4),
+            transforms.RandomCrop(224),
+            transforms.RandomHorizontalFlip(),
             transforms.RandomAutocontrast(),
-            transforms.ColorJitter(brightness=0.1, contrast=0.1, saturation=0.1, hue=0.1),
+            transforms.RandomAffine(0, translate=(0.1, 0.1)),
+            transforms.RandomAdjustSharpness(0.5),
+            transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.2),
             transforms.ToTensor(),
         ]),
         "valid": transforms.Compose([
