@@ -49,7 +49,7 @@ class MyModel(nn.Module):
         )
 
         self.classifier = nn.Sequential(
-            nn.Linear(4608, 1024),
+            nn.Linear(512*3*3, 1024),
             nn.ReLU(),
             nn.Dropout(p=dropout),
             nn.Linear(1024, 512),
