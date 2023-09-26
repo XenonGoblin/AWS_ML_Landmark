@@ -51,21 +51,24 @@ def get_data_loaders(
             transforms.RandomPerspective(distortion_scale=0.4),
             transforms.RandomCrop(224),
             transforms.RandomHorizontalFlip(),
-            transforms.RandomAutocontrast(),
+            #transforms.RandomAutocontrast(),
             transforms.RandomAffine(0, translate=(0.1, 0.1)),
             transforms.RandomAdjustSharpness(0.5),
-            transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.2),
+            transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.01, hue=0.01),
             transforms.ToTensor(),
+            transforms.Normalize(mean, std),
         ]),
         "valid": transforms.Compose([
             transforms.Resize(256),
             transforms.CenterCrop(224),
             transforms.ToTensor(),
+            transforms.Normalize(mean, std),
         ]),
         "test": transforms.Compose([
             transforms.Resize(256),
             transforms.CenterCrop(224),
             transforms.ToTensor(),
+            transforms.Normalize(mean, std),
         ])
     }
 
